@@ -16,7 +16,8 @@ def hierarchy(df1, df2):
     - Indexes both dataframes on their 'Timestamp' column.
     - Selects rows from timestamps 1417411980 to 1417417980 (inclusive).
     - Concatenates df2 (bitstamp) and df1 (coinbase) with keys.
-    - Rearranges the MultiIndex so Timestamp is level 0 and exchange is level 1.
+    - Rearranges the MultiIndex so Timestamp is level 0 and exchange is
+      level 1.
     - Sorts to ensure chronological order.
 
     Args:
@@ -34,7 +35,6 @@ def hierarchy(df1, df2):
         keys=["bitstamp", "coinbase"]
     )
 
-    # Current index: (exchange, Timestamp) -> swap to (Timestamp, exchange)
     df = df.swaplevel(0, 1).sort_index()
 
     return df
