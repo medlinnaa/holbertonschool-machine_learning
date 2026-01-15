@@ -2,7 +2,6 @@
 """4-array.py"""
 
 
-
 def array(df):
     """
     Selects the last 10 rows of the High and Close columns
