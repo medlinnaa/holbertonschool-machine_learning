@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """4-array.py"""
 
-import numpy as np
 
 
 def array(df):
