@@ -3,7 +3,7 @@
 
 
 def mat_mul(mat1, mat2):
-    """a function that returns 
+    """a function that returns
     the product of two 2D matrices, or None if they can't multiply."""
     if len(mat1[0]) != len(mat2):
         return None
