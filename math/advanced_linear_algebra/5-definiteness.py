@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 import numpy as np
+"""creating a function that defines the definiteness."""
 
 
 def definiteness(matrix):
+    """function that returns
+    definiteness of the matrix using numpy."""
     if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
     if len(matrix.shape) != 2 or matrix.shape[0] != matrix.shape[1]:
