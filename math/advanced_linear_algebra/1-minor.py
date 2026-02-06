@@ -33,7 +33,7 @@ def minor(matrix):
     n = len(matrix)
     if n == 1 and len(matrix[0]) == 0:
         raise ValueError("matrix must be a non-empty square matrix")
-    
+
     for row in matrix:
         if len(row) != n:
             raise ValueError("matrix must be a non-empty square matrix")
@@ -45,7 +45,8 @@ def minor(matrix):
     for i in range(n):
         row_minors = []
         for j in range(n):
-            sub_matrix = [row[:j] + row[j+1:] for row in (matrix[:i] + matrix[i+1:])]
+            sub_matrix = [row[:j] + row[j+1:] 
+                    for row in (matrix[:i] + matrix[i+1:])]
             row_minors.append(_determinant(sub_matrix))
         minor_matrix.append(row_minors)
 
