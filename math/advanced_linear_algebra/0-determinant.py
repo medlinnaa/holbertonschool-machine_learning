@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""defining a function called determinant in order to calculate the determinant of the given matrix. """
+"""defining a function called determinant
+in order to calculate the determinant of the given matrix. """
+
 
 def determinant(matrix):
     """this function just returns the determinant of an arbitrary matrix
@@ -13,7 +15,6 @@ def determinant(matrix):
     for row in matrix:
         if not isinstance(row, list):
             raise TypeError("matrix must be a list of lists")
-
 
     n = len(matrix)
     for row in matrix:
