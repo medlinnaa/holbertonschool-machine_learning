@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""using two functions to find the adjugate of a given matrix."""
+"""using two functions
+to find the adjugate of a given matrix."""
 
 
 def _determinant(matrix):
-    """again, a first function that is used as a helper function to calculate matrix determinant"""
+    """again, a first function that is used as
+    a helper function to calculate matrix determinant"""
     n = len(matrix)
     if n == 1:
         return matrix[0][0]
@@ -18,7 +20,8 @@ def _determinant(matrix):
 
 
 def adjugate(matrix):
-    """second function just gives the answer of adjugate of the given matrix."""
+    """second function just gives
+    the answer of adjugate of the given matrix."""
     if not isinstance(matrix, list) or len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
     for row in matrix:
