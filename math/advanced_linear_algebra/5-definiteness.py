@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
+"""Module to calculate the definiteness of a square matrix"""
 import numpy as np
-"""creating a function that defines the definiteness."""
 
 
 def definiteness(matrix):
-    """function that returns
-    definiteness of the matrix using numpy."""
+    """
+    Calculates the definiteness of a numpy.ndarray
+    Returns: string description of definiteness or None
+    """
     if not isinstance(matrix, np.ndarray):
         raise TypeError("matrix must be a numpy.ndarray")
     if len(matrix.shape) != 2 or matrix.shape[0] != matrix.shape[1]:
