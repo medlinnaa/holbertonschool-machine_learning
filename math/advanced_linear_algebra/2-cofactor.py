@@ -49,7 +49,7 @@ def cofactor(matrix):
             minor_val = _determinant(sub_matrix)
 
             row_cofactors.append(((-1) ** (i + j)) * minor_val)
-            
+
         cofactor_matrix.append(row_cofactors)
 
     return cofactor_matrix
