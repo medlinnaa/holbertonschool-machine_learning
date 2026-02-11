@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-""" updating the Poisson class to include PMF(Probability Mass Function) """
+"""updating the Poisson class to include CDF"""
 
 
 class Poisson:
-    """class that represents a poisson distribution"""
+    """defining class that represents a poisson distribution"""
 
     def __init__(self, data=None, lambtha=1.):
         """initializing the distribution"""
@@ -19,21 +19,27 @@ class Poisson:
             self.lambtha = float(sum(data) / len(data))
 
     def pmf(self, k):
-        """calculating the value of the PMF
-        for a given number of 'successes'"""
+        """finding the value of the PMF for a given number of 'successes'"""
+        k = int(k)
+        if k < 0:
+            return 0
+
+        e = 2.7182818285
+        factorial = 1
+        for i in range(1, k + 1):
+            factorial *= i
+
+        return (e ** -self.lambtha) * (self.lambtha ** k) / factorial
+
+    def cdf(self, k):
+        """finding the value of the CDF for a given number of 'successes'"""
         k = int(k)
 
         if k < 0:
             return 0
 
-        # e is approximately 2.7182818285
-        e = 2.7182818285
+        total_prob = 0
+        for i in range(k + 1):
+            total_prob += self.pmf(i)
 
-        factorial = 1
-        for i in range(1, k + 1):
-            factorial *= i
-
-        # P = (e^-lambda * lambda^k) / k!
-        pdf_val = (e ** -self.lambtha) * (self.lambtha ** k) / factorial
-
-        return pdf_val
+        return total_prob
