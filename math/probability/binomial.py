@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""update Binomial distribution class with PMF"""
+"""update Binomial distribution class with CDF"""
 
 
 class Binomial:
-    """represents a binomial distribution"""
+    """a class that contains a binomial distribution """
 
     def __init__(self, data=None, n=1, p=0.5):
         """class constructor"""
@@ -27,15 +27,11 @@ class Binomial:
             self.p = float(mean / self.n)
 
     def pmf(self, k):
-        """finding the value of the PMF for a given number of successes"""
-        # Ensure k is an integer
+        """calculating the value of the PMF for a given number of successes"""
         k = int(k)
-
-        # k must be within the range [0, n]
         if k < 0 or k > self.n:
             return 0
 
-        # Calculate factorial for binomial coefficient: n! / (k!(n-k)!)
         def factorial(num):
             res = 1
             for i in range(1, num + 1):
@@ -46,10 +42,22 @@ class Binomial:
         k_fact = factorial(k)
         nk_fact = factorial(self.n - k)
 
-        # Binomial coefficient (n choose k)
         combination = n_fact / (k_fact * nk_fact)
-
-        # PMF = (nCk) * (p^k) * ((1-p)^(n-k))
         pmf_val = combination * (self.p ** k) * ((1 - self.p) ** (self.n - k))
-
         return pmf_val
+
+    def cdf(self, k):
+        """calculating the value of the CDF for a given number of successes"""
+        k = int(k)
+
+        if k < 0:
+            return 0
+
+        if k >= self.n:
+            return 1
+
+        cdf_val = 0
+        for i in range(k + 1):
+            cdf_val += self.pmf(i)
+
+        return cdf_val
