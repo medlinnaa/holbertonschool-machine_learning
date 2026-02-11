@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""updating the exponential class to include PDF"""
+"""update to exponential class to include CDF"""
 
 
 class Exponential:
@@ -16,7 +16,6 @@ class Exponential:
                 raise TypeError("data must be a list")
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
-            # lambtha is the inverse of the mean
             self.lambtha = float(len(data) / sum(data))
 
     def pdf(self, x):
@@ -24,9 +23,18 @@ class Exponential:
         for a given time period"""
         if x < 0:
             return 0
+        e = 2.7182818285
+        return self.lambtha * (e ** (-self.lambtha * x))
+
+    def cdf(self, x):
+        """finding the value of the CDF
+        for a given time period"""
+
+        if x < 0:
+            return 0
 
         e = 2.7182818285
 
-        pdf_val = self.lambtha * (e ** (-self.lambtha * x))
+        cdf_val = 1 - (e ** (-self.lambtha * x))
 
-        return pdf_val
+        return cdf_val
