@@ -4,7 +4,8 @@ import numpy as np
 
 
 def intersection(x, n, P, Pr):
-    """finding the intersection of obtaining x and n with each probability in P"""
+    """finding the intersection of obtaining x
+    and n with each probability in P"""
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
 
@@ -35,7 +36,7 @@ def intersection(x, n, P, Pr):
     fact_x = np.math.factorial(x)
     fact_nx = np.math.factorial(n - x)
     combination = fact_n / (fact_x * fact_nx)
-    
+
     likelihood = combination * (P ** x) * ((1 - P) ** (n - x))
 
     return likelihood * Pr
