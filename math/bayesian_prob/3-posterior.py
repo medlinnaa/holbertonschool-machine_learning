@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""calculating the posterior probability for various hypothetical probabilities"""
+"""calculating the posterior probability
+for various hypothetical probabilities"""
 import numpy as np
 
 
@@ -40,7 +41,6 @@ def posterior(x, n, P, Pr):
     likelihood = combination * (P ** x) * ((1 - P) ** (n - x))
 
     intersection = likelihood * Pr
-
 
     marginal = np.sum(intersection)
 
