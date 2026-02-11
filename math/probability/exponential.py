@@ -20,7 +20,7 @@ class Exponential:
             self.lambtha = float(len(data) / sum(data))
 
     def pdf(self, x):
-        """calculating the value of the PDF 
+        """calculating the value of the PDF
         for a given time period"""
         if x < 0:
             return 0
