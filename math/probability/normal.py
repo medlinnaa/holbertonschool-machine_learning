@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""update to Normal class to include z-score and x-value"""
+"""update to Normal class to include PDF"""
 
 
 class Normal:
@@ -32,3 +32,17 @@ class Normal:
     def x_value(self, z):
         """calculating the x-value of a given z-score"""
         return self.mean + (z * self.stddev)
+
+    def pdf(self, x):
+        """calculating the value of the PDF for a given x-value"""
+        pi = 3.1415926536
+        e = 2.7182818285
+
+        coefficient = 1 / (self.stddev * ((2 * pi) ** 0.5))
+
+        z = self.z_score(x)
+        exponent = -0.5 * (z ** 2)
+
+        result = coefficient * (e ** exponent)
+
+        return result
