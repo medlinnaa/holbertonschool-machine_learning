@@ -36,11 +36,11 @@ class Normal:
         val = (x - self.mean) / (self.stddev * (2 ** 0.5))
 
         erf = (2 / (pi ** 0.5)) * (
-            val - 
-            (val ** 3) / 3 + 
-            (val ** 5) / 10 - 
-            (val ** 7) / 42 + 
+            val -
+            (val ** 3) / 3 +
+            (val ** 5) / 10 -
+            (val ** 7) / 42 +
             (val ** 9) / 216
         )
-        
+
         return 0.5 * (1 + erf)
