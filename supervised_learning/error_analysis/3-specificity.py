@@ -14,7 +14,8 @@ def specificity(confusion):
             column indices = predicted labels
 
     Returns:
-        A numpy.ndarray of shape (classes,) containing specificity of each class
+        A numpy.ndarray of shape (classes,)
+        containing specificity of each class
     """
     tp = np.diag(confusion)
 
