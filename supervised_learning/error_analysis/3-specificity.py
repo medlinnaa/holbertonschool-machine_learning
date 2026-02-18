@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Module to calculate speficity"""
-import numpy as npy
+import numpy as np
 
 
 def specificity(confusion):
