@@ -9,12 +9,12 @@ def f1_score(confusion):
     """
     Calculates the F1 score for each class
     in a confusion matrix
-    
+
     Args:
         confusion: numpy.ndarray of shape (classes, classes)
             row indices = correct labels
             column indices = predicted labels
-            
+
     Returns:
         A numpy.ndarray of shape (classes,)
         containing F1 score of each class
