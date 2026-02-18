@@ -3,7 +3,7 @@
 import numpy as npy
 
 
-def speicificity(confusion):
+def specificity(confusion):
     """
     this function calculates the specificity
     for each class in a confusion matrix
