@@ -24,7 +24,7 @@ def speicificity(confusion):
 
     total_samples = np.sum(confusion)
 
-    tn = total samples - (actual_positives + predicted_positives - tp)
+    tn = total_samples - (actual_positives + predicted_positives - tp)
 
     fp = predicted_positives - tp
 
