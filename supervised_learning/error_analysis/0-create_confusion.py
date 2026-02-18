@@ -6,11 +6,11 @@ import numpy as np
 def create_confusion_matrix(labels, logits):
     """
     this function creates confusion matrix
-    
+
     Args:
         labels: one-hot numpy.ndarray of shape (m, classes)
         logits: one-hot numpy.ndarray of shape (m, classes)
-        
+
     Returns:
         confusion: numpy.ndarray of shape (classes, classes)
     """
@@ -21,7 +21,7 @@ def create_confusion_matrix(labels, logits):
     classes = labels.shape[1]
 
     confusion = np.zeros((classes, classes))
- 
+
     for i in range(len(y_true)):
         confusion[y_true[i]][y_pred[i]] += 1
 
