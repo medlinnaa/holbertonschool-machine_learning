@@ -238,7 +238,7 @@ class Decision_Tree():
             gini_l = np.nan_to_num(gini_l)
             gini_r = np.nan_to_num(gini_r)
 
-        gini_splits = (n_left / n_total) * gini_l + (n_right / n_total) * gini_r
+        gini_splits = (n_left / n_total)*gini_l + (n_right / n_total)*gini_r
 
         best_idx = np.argmin(gini_splits)
         return thresholds[best_idx], gini_splits[best_idx]
