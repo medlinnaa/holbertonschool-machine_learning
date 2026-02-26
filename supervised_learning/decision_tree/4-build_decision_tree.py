@@ -86,12 +86,15 @@ class Node:
             self.upper = {0: np.inf}
             self.lower = {0: -np.inf}
 
-        for child in [self.left_child, self.right_child]:
-            child.lower = self.lower.copy()
-            child.upper = self.upper.copy()
+        # 1. Setup Left Child (The "Greater Than" side)
+        self.left_child.lower = self.lower.copy()
+        self.left_child.upper = self.upper.copy()
+        self.left_child.lower[self.feature] = self.threshold
 
-        self.left_child.upper[self.feature] = self.threshold
-        self.right_child.lower[self.feature] = self.threshold
+        # 2. Setup Right Child (The "Less Than" side)
+        self.right_child.lower = self.lower.copy()
+        self.right_child.upper = self.upper.copy()
+        self.right_child.upper[self.feature] = self.threshold
 
         for child in [self.left_child, self.right_child]:
             child.update_bounds_below()
