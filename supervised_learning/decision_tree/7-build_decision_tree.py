@@ -195,7 +195,6 @@ class Decision_Tree():
         if self.split_criterion == "random":
             self.split_criterion = self.random_split_criterion
         else:
-            # Placeholder for Gini later
             self.split_criterion = self.Gini_split_criterion
         self.explanatory = explanatory
         self.target = target
@@ -205,12 +204,12 @@ class Decision_Tree():
 
         if verbose == 1:
             print(f"  Training finished.\n"
-                  f"- Depth                     : {self.depth()}\n"
-                  f"- Number of nodes           : {self.count_nodes()}\n"
-                  f"- Number of leaves          : "
+                  f"    - Depth                     : {self.depth()}\n"
+                  f"    - Number of nodes           : {self.count_nodes()}\n"
+                  f"    - Number of leaves          : "
                   f"{self.count_nodes(only_leaves=True)}\n"
-                  f"- Accuracy on training data : "
-                  f"{self.accuracy(self.explanatory, self.target)}")
+                  f"    - Accuracy on training data : "
+                  f"{self.accuracy(self.explanatory, self.target)}\n")
 
     def fit_node(self, node):
         """ Recursively fits each node by splitting data """
