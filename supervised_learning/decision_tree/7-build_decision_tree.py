@@ -139,18 +139,33 @@ class Leaf(Node):
         return self.depth
 
     def count_nodes_below(self, only_leaves=False):
+        """
+        Returns the count of nodes below (always 1 for a leaf)
+        """
         return 1
 
     def __str__(self):
+        """
+        Returns the string representation of the leaf
+        """
         return f"leaf [value={self.value}]"
 
     def get_leaves_below(self):
+        """
+        Returns a list containing the leaf itself
+        """
         return [self]
 
     def update_bounds_below(self):
+        """
+        Leaves do not have children, so no bounds to update
+        """
         pass
 
     def pred(self, x):
+        """
+        Returns the prediction value of the leaf
+        """
         return self.value
 
 
