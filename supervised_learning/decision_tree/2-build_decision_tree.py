@@ -26,14 +26,14 @@ class Node:
         self.depth = depth
 
     def max_depth_below(self):
-        """recursively finds the maximum depth of the tree"""
+        """recursively finds the maximum depth"""
         return max(
             self.left_child.max_depth_below(),
             self.right_child.max_depth_below()
         )
 
     def count_nodes_below(self, only_leaves=False):
-        """recursively counts the nodes or leaves below this node"""
+        """ Recursively counts the nodes or leaves """
         left_count = self.left_child.count_nodes_below(only_leaves=only_leaves)
         right_count = self.right_child.count_nodes_below(
             only_leaves=only_leaves
@@ -43,25 +43,25 @@ class Node:
         return 1 + left_count + right_count
 
     def left_child_add_prefix(self, text):
-        """adds the prefix for left children"""
+        """adds the prefix +---> for left children"""
         lines = text.split("\n")
-        new_text = "    +--" + lines[0] + "\n"
+        new_text = "    +---> " + lines[0] + "\n"
         for x in lines[1:]:
             if x:
                 new_text += ("    |  " + x) + "\n"
         return new_text
 
     def right_child_add_prefix(self, text):
-        """adds the prefix for right children"""
+        """adds the prefix +---> for right children"""
         lines = text.split("\n")
-        new_text = "    +--" + lines[0] + "\n"
+        new_text = "    +---> " + lines[0] + "\n"
         for x in lines[1:]:
             if x:
                 new_text += ("       " + x) + "\n"
         return new_text
 
     def __str__(self):
-        """string representation of a node"""
+        """ String representation of a node """
         if self.is_root:
             out = f"root [feature={self.feature}, threshold={self.threshold}]\n"
         else:
@@ -81,16 +81,16 @@ class Leaf(Node):
         self.depth = depth
 
     def max_depth_below(self):
-        """returns the depth of the leaf"""
+        """returns leaf depth"""
         return self.depth
 
     def count_nodes_below(self, only_leaves=False):
-        """a leaf always counts as 1"""
+        """returns 1 for leaf count"""
         return 1
 
     def __str__(self):
         """string representation of a leaf"""
-        return f"-> leaf [value={self.value}]"
+        return f"leaf [value={self.value}]"
 
 
 class Decision_Tree():
@@ -116,13 +116,13 @@ class Decision_Tree():
         self.predict = None
 
     def depth(self):
-        """returns maximum depth"""
+        """returns tree depth"""
         return self.root.max_depth_below()
 
     def count_nodes(self, only_leaves=False):
-        """returns total nodes/leaves"""
+        """returns tree node count"""
         return self.root.count_nodes_below(only_leaves=only_leaves)
 
     def __str__(self):
-        """returns the full tree as a string"""
+        """returns the full tree string"""
         return self.root.__str__()
