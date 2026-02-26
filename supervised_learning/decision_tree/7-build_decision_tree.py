@@ -196,6 +196,7 @@ class Decision_Tree():
             self.split_criterion = self.random_split_criterion
         else:
             self.split_criterion = self.Gini_split_criterion
+
         self.explanatory = explanatory
         self.target = target
         self.root.sub_population = np.ones_like(self.target, dtype='bool')
@@ -203,13 +204,14 @@ class Decision_Tree():
         self.update_predict()
 
         if verbose == 1:
+            # Removed the extra \n at the very end to match the character count
             print(f"  Training finished.\n"
                   f"    - Depth                     : {self.depth()}\n"
                   f"    - Number of nodes           : {self.count_nodes()}\n"
                   f"    - Number of leaves          : "
                   f"{self.count_nodes(only_leaves=True)}\n"
                   f"    - Accuracy on training data : "
-                  f"{self.accuracy(self.explanatory, self.target)}\n")
+                  f"{self.accuracy(self.explanatory, self.target)}")
 
     def fit_node(self, node):
         """ Recursively fits each node by splitting data """
