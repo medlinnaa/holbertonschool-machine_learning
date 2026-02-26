@@ -20,16 +20,16 @@ class Node:
 
     def max_depth_below(self):
         """
-        recursively finds the maximum depth of the tree 
+        recursively finds the maximum depth of the tree
         by checking the left and right children.
         """
-        #ask the left child for its deepest point
+        # ask the left child for its deepest point
         left_max = self.left_child.max_depth_below()
 
-        #ask the right child for its deepest point
+        # ask the right child for its deepest point
         right_max = self.right_child.max_depth_below()
 
-        #return the larger of the two
+        # return the larger of the two
         return max(left_max, right_max)
 
 
