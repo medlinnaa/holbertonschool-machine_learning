@@ -20,9 +20,9 @@ class Neuron:
         # 2. Public instance attributes
         # W initialized with random normal distribution in a 2D shape (1, nx)
         self.W = np.random.randn(1, nx)
-        
+
         # b initialized to 0
         self.b = 0
-        
+
         # A (activated output) initialized to 0
         self.A = 0
