@@ -24,22 +24,22 @@ class Neuron:
 
     @property
     def W(self):
-        """Getter for the weights vector __W"""
+        """Getter __W"""
         return self.__W
 
     @property
     def b(self):
-        """Getter for the bias __b"""
+        """Getter __b"""
         return self.__b
 
     @property
     def A(self):
-        """Getter for the activated output __A"""
+        """Getter __A"""
         return self.__A
 
     def forward_prop(self, X):
         """
-        Calculates the forward propagation of the neuron
+        Calculates forward propagation of the neuron
         X: numpy.ndarray with shape (nx, m) containing input data
         """
         Z = np.matmul(self.__W, X) + self.__b
@@ -49,24 +49,24 @@ class Neuron:
 
     def cost(self, Y, A):
         """
-        Calculates the cost of the model using logistic regression
+        Calculates model cost using logistic regression
         Y: numpy.ndarray with shape (1, m) containing correct labels
         A: numpy.ndarray with shape (1, m) containing activated outputs
         """
         m = Y.shape[1]
-        # Use 1.0000001 - A to avoid division by zero (log(0))
+        # Use 1.0000001 - A to avoid division by zero
         cost = -1 / m * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
         return cost
 
     def evaluate(self, X, Y):
         """
-        Evaluates the neuron's predictions
+        Evaluates neuron predictions
         X: numpy.ndarray (nx, m) containing input data
         Y: numpy.ndarray (1, m) containing correct labels
         """
         A = self.forward_prop(X)
         cost = self.cost(Y, A)
-        # Threshold of 0.5 for binary classification
+        # Threshold 0.5 binary classification
         prediction = np.where(A >= 0.5, 1, 0)
         return prediction, cost
 
@@ -79,15 +79,9 @@ class Neuron:
         alpha: the learning rate
         """
         m = Y.shape[1]
-
-        # 1. Calculate the error (difference)
         dz = A - Y
-
-        # 2. Calculate the gradients for W and b
-        # X.T is used to align shapes: (1, m) * (m, nx) = (1, nx)
+        # X.T aligns shapes: (1, m) * (m, nx) = (1, nx)
         dw = (1 / m) * np.matmul(dz, X.T)
         db = (1 / m) * np.sum(dz)
-
-        # 3. Update the private attributes by moving opposite to the gradient
         self.__W = self.__W - (alpha * dw)
         self.__b = self.__b - (alpha * db)
