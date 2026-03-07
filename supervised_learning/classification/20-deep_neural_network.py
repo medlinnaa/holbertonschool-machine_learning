@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#!/usr/bin/env python3
 """Defines a deep neural network"""
 import numpy as np
 
@@ -27,9 +26,9 @@ class DeepNeuralNetwork:
         self.__cache = {}
         self.__weights = {}
 
+        # Loop 1: Initializing weights and biases
         for layer in range(1, self.__L + 1):
             nodes = layers[layer - 1]
-            # Condition broken into two lines to stay under 80 characters
             if not isinstance(nodes, int) or (
                     nodes <= 0):
                 raise TypeError("layers must be a list of positive integers")
@@ -66,7 +65,7 @@ class DeepNeuralNetwork:
         """
         self.__cache['A0'] = X
 
-        # Single loop to move through all layers
+        # Loop 2: Moving through the layers
         for layer in range(1, self.__L + 1):
             w = self.__weights['W' + str(layer)]
             b = self.__weights['b' + str(layer)]
@@ -93,20 +92,15 @@ class DeepNeuralNetwork:
 
     def evaluate(self, X, Y):
         """
-        Evaluates the deep neural network's predictions
+        Evaluates the deep neural network predictions
         X: numpy.ndarray with shape (nx, m) containing input data
         Y: numpy.ndarray with shape (1, m) containing correct labels
         Returns: prediction and cost
         """
-        # Step 1: Forward Propagation to get the last layer's output (A)
-        # We don't need the cache for evaluation, so we use _
-        A, _ = self.forward_prop(X)
-
-        # Step 2: Calculate the cost based on the final output
-        cost = self.cost(Y, A)
-
-        # Step 3: Convert probabilities (A) to binary labels (0 or 1)
-        # If A >= 0.5, label is 1; else, label is 0
-        prediction = np.where(A >= 0.5, 1, 0)
-
+        # A is the activated output of the last layer
+        a, _ = self.forward_prop(X)
+        # Calculate cost based on the final prediction
+        cost = self.cost(Y, a)
+        # Binary classification based on 0.5 threshold
+        prediction = np.where(a >= 0.5, 1, 0)
         return prediction, cost
