@@ -100,13 +100,9 @@ class NeuralNetwork:
         Y: numpy.ndarray with shape (1, m) containing correct labels
         Returns: prediction and cost
         """
-        # Get activated outputs from the layers
         _, a2 = self.forward_prop(X)
-        # Calculate the error of the model
         cost = self.cost(Y, a2)
-        # Convert output probabilities to binary labels (0 or 1)
         prediction = np.where(a2 >= 0.5, 1, 0)
-
         return prediction, cost
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
@@ -120,54 +116,47 @@ class NeuralNetwork:
         """
         m = Y.shape[1]
 
-        # 1. Output Layer Gradients
+        # Output Layer Gradients
         dz2 = A2 - Y
         dw2 = (1 / m) * np.matmul(dz2, A1.T)
         db2 = (1 / m) * np.sum(dz2, axis=1, keepdims=True)
 
-        # 2. Hidden Layer Gradients
-        # Derivative of Sigmoid: A1 * (1 - A1)
-        # dz1 uses the backpropagated error from dz2
+        # Hidden Layer Gradients
+        # Backpropagated error from dz2 multiplied by sigmoid derivative
         dz1 = np.matmul(self.__W2.T, dz2) * (A1 * (1 - A1))
         dw1 = (1 / m) * np.matmul(dz1, X.T)
         db1 = (1 / m) * np.sum(dz1, axis=1, keepdims=True)
 
-        # 3. Update private attributes
+        # Update private attributes
         self.__W2 = self.__W2 - (alpha * dw2)
         self.__b2 = self.__b2 - (alpha * db2)
         self.__W1 = self.__W1 - (alpha * dw1)
         self.__b1 = self.__b1 - (alpha * db1)
 
-        def train(self, X, Y, iterations=5000, alpha=0.05):
+    def train(self, X, Y, iterations=5000, alpha=0.05):
         """
         Trains the neural network
         X: numpy.ndarray with shape (nx, m) containing input data
         Y: numpy.ndarray with shape (1, m) containing correct labels
         iterations: number of iterations to train over
         alpha: the learning rate
-        Returns: evaluation of the training data after training
+        Returns: evaluation of training data after training
         """
-        # 1. Validation of iterations
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
 
-        # 2. Validation of alpha
         if not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
 
-        # 3. Training Loop
-        # We use a single loop to predict and correct the network
+        # Training Loop - only one loop used
         i = 0
         while i < iterations:
-            # Step A: Forward propagation updates __A1 and __A2
             self.forward_prop(X)
-            # Step B: Gradient descent updates __W1, __b1, __W2, __b2
             self.gradient_descent(X, Y, self.__A1, self.__A2, alpha)
             i += 1
 
-        # 4. Final Evaluation after all iterations
         return self.evaluate(X, Y)
