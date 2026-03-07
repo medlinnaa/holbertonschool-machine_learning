@@ -26,18 +26,18 @@ class DeepNeuralNetwork:
         self.cache = {}
         self.weights = {}
 
-        for l in range(1, self.L + 1):
+        for layer in range(1, self.L + 1):
             # First, check if layer nodes are valid
-            if not isinstance(layers[l-1], int) or layers[l-1] <= 0:
+            if not isinstance(layers[layer-1], int) or layers[layer-1] <= 0:
                 raise TypeError("layers must be a list of positive integers")
 
             # Determine input size of the current layer
             # Layer 1 uses nx; subsequent layers use the size of previous layer
-            prev_size = nx if l == 1 else layers[l-2]
+            prev_size = nx if layer == 1 else layers[layer-2]
 
             # W = randn * sqrt(2 / prev_layer_size)
-            self.weights['W' + str(l)] = np.random.randn(
-                layers[l-1], prev_size) * np.sqrt(2 / prev_size)
+            self.weights['W' + str(layer)] = np.random.randn(
+                layers[layer-1], prev_size) * np.sqrt(2 / prev_size)
 
             # Biases initialized to zeros
-            self.weights['b' + str(l)] = np.zeros((layers[l-1], 1))
+            self.weights['b' + str(layer)] = np.zeros((layers[layer-1], 1))
