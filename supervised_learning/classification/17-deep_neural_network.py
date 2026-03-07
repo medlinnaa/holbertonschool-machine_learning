@@ -26,16 +26,15 @@ class DeepNeuralNetwork:
         self.__cache = {}
         self.__weights = {}
 
-        # Use 'layer' to avoid pycodestyle E741 error
         for layer in range(1, self.__L + 1):
             if not isinstance(layers[layer - 1], int) or layers[layer - 1] <= 0:
                 raise TypeError("layers must be a list of positive integers")
 
-            # Determine input size of current layer
             prev_size = nx if layer == 1 else layers[layer - 2]
 
-            self.__weights['W' + str(layer)] = np.random.randn(
-                layers[layer - 1], prev_size) * np.sqrt(2 / prev_size)
+            # He et al. initialization - wrapped to avoid E501
+            val = np.random.randn(layers[layer - 1], prev_size)
+            self.__weights['W' + str(layer)] = val * np.sqrt(2 / prev_size)
 
             # Bias initialized to zeros
             self.__weights['b' + str(layer)] = np.zeros((layers[layer - 1], 1))
