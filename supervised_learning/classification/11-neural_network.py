@@ -70,33 +70,25 @@ class NeuralNetwork:
         X: numpy.ndarray with shape (nx, m) containing input data
         Returns: private attributes __A1 and __A2, respectively
         """
-        # 1. Hidden Layer calculation
-        # Z1 = W1 * X + b1
+        # Hidden Layer calculation
         z1 = np.matmul(self.__W1, X) + self.__b1
-        # A1 = Sigmoid activation of z1
         self.__A1 = 1 / (1 + np.exp(-z1))
 
-        # 2. Output Layer calculation
-        # Z2 = W2 * A1 + b2
+        # Output Layer calculation
         z2 = np.matmul(self.__W2, self.__A1) + self.__b2
-        # A2 = Sigmoid activation of z2 (final prediction)
         self.__A2 = 1 / (1 + np.exp(-z2))
 
         return self.__A1, self.__A2
 
     def cost(self, Y, A):
         """
-        Calculates the cost of the model using logistic regression
+        Calculates model cost using logistic regression
         Y: numpy.ndarray with shape (1, m) containing correct labels
         A: numpy.ndarray with shape (1, m) containing activated outputs
         Returns: the cost
         """
-        # m is the number of examples
         m = Y.shape[1]
-
-        # Logistic regression cost formula
-        # We use 1.0000001 - A for numerical stability
+        # Use 1.0000001 - A to avoid division by zero
         inner_log = Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A)
         cost = -1 / m * np.sum(inner_log)
-
         return cost
