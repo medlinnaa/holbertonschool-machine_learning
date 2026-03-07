@@ -27,7 +27,9 @@ class DeepNeuralNetwork:
         self.__weights = {}
 
         for layer in range(1, self.__L + 1):
-            if not isinstance(layers[layer - 1],int) or layers[layer - 1] <= 0:
+            nodes = layers[layer - 1]
+            if not isinstance(nodes, int) or (
+                    nodes <= 0):
                 raise TypeError("layers must be a list of positive integers")
 
             prev_size = nx if layer == 1 else layers[layer - 2]
