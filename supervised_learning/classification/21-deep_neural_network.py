@@ -26,6 +26,7 @@ class DeepNeuralNetwork:
         self.__cache = {}
         self.__weights = {}
 
+        # Loop 1: Initializing weights and biases
         for layer in range(1, self.__L + 1):
             nodes = layers[layer - 1]
             if not isinstance(nodes, int) or (
@@ -60,6 +61,7 @@ class DeepNeuralNetwork:
         Returns: output of the neural network and the cache
         """
         self.__cache['A0'] = X
+        # Loop 2: Moving through the layers
         for layer in range(1, self.__L + 1):
             w = self.__weights['W' + str(layer)]
             b = self.__weights['b' + str(layer)]
@@ -102,24 +104,19 @@ class DeepNeuralNetwork:
         alpha: the learning rate
         """
         m = Y.shape[1]
-        # Starting dz for the output layer (dz_L)
         dz = cache['A' + str(self.__L)] - Y
 
-        # Moving backward through the layers
+        # Loop 3: Moving backward through the layers
         for layer in range(self.__L, 0, -1):
             a_prev = cache['A' + str(layer - 1)]
             w_curr = self.__weights['W' + str(layer)]
             b_curr = self.__weights['b' + str(layer)]
 
-            # Calculate gradients for current layer
             dw = (1 / m) * np.matmul(dz, a_prev.T)
             db = (1 / m) * np.sum(dz, axis=1, keepdims=True)
 
-            # Propagate dz back to the previous layer (except for layer 1)
             if layer > 1:
-                # Chain rule: derivative of cost * derivative of sigmoid
                 dz = np.matmul(w_curr.T, dz) * (a_prev * (1 - a_prev))
 
-            # Update weights and biases for the current layer
             self.__weights['W' + str(layer)] = w_curr - (alpha * dw)
             self.__weights['b' + str(layer)] = b_curr - (alpha * db)
