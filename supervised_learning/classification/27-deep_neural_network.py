@@ -6,7 +6,8 @@ import os
 
 class DeepNeuralNetwork:
     """
-    Class that defines a deep neural network performing multiclass classification
+    Class that defines a deep neural network
+    performing multiclass classification
     """
 
     def __init__(self, nx, layers):
