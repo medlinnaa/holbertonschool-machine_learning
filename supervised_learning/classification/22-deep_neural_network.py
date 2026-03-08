@@ -121,7 +121,6 @@ class DeepNeuralNetwork:
             self.__weights['W' + str(layer)] = w_curr - (alpha * dw)
             self.__weights['b' + str(layer)] = b_curr - (alpha * db)
 
-
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """
         Trains the deep neural network
