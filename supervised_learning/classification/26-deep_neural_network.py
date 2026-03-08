@@ -149,8 +149,7 @@ class DeepNeuralNetwork:
         iter_list = []
 
         # Loop 4: Iterative training process
-        i = 0
-        while i < iterations + 1:
+        for i in range(iterations + 1):
             if i < iterations:
                 a_last, _ = self.forward_prop(X)
             else:
@@ -166,7 +165,6 @@ class DeepNeuralNetwork:
 
             if i < iterations:
                 self.gradient_descent(Y, self.__cache, alpha)
-            i += 1
 
         if graph:
             plt.plot(iter_list, costs, 'b-')
