@@ -17,8 +17,10 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
     # This line means: Take 'inputs',
     # pass it through 'Dense', call the result 'x'
-    x = K.layers.Dense(layers[0], activation=activations[0],
-        kernel_regularizer=reg)(inputs)
+    x = K.layers.Dense(layers[0],
+         activation=activations[0],
+        kernel_regularizer=reg
+        )(inputs)
 
     # 3. Loop through the rest of the layers
     for i in range(1, len(layers)):
@@ -27,8 +29,10 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
         # Pass the result of Dropout
         # into the next Dense layer
-        x = K.layers.Dense(layers[i], activation=activations[i],
-            kernel_regularizer=reg)(x)
+        x = K.layers.Dense(layers[i],
+            activation=activations[i],
+            kernel_regularizer=reg
+            )(x)
 
     # 4. Create the model by connecting
     # the start (inputs) to the end (x)
