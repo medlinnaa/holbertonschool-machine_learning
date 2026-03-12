@@ -16,7 +16,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
     # Fixed indentation here:
     x = K.layers.Dense(
-        layers[0], 
+        layers[0],
         activation=activations[0],
         kernel_regularizer=reg
     )(inputs)
@@ -28,7 +28,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
         # Fixed indentation here:
         x = K.layers.Dense(
-            layers[i], 
+            layers[i],
             activation=activations[i],
             kernel_regularizer=reg
         )(x)
