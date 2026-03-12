@@ -13,8 +13,8 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     # 2. Add the first layer (needs the input shape!)
     # L2 regularization is added here via kernel_regularizer
     model.add(K.layers.Dense(
-        layers[0], 
-        input_shape=(nx,), 
+        layers[0],
+        input_shape=(nx,),
         activation=activations[0],
         kernel_regularizer=K.regularizers.l2(lambtha)
     ))
@@ -27,7 +27,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
         # Add the next Dense layer
         model.add(K.layers.Dense(
-            layers[i], 
+            layers[i],
             activation=activations[i],
             kernel_regularizer=K.regularizers.l2(lambtha)
         ))
