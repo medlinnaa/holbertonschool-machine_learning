@@ -20,7 +20,7 @@ def load_config(filename):
     """
     Loads a model with a specific configuration from a JSON file
     """
-    # Read the JSON string from the file 
+    # Read the JSON string from the file
     with open(filename, 'r') as f:
         config = f.read()
 
