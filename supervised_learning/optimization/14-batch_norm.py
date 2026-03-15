@@ -1,35 +1,50 @@
 #!/usr/bin/env python3
-"""Module to create a batch normalization layer in TensorFlow"""
+"""
+Module containing the function create_batch_norm_layer
+"""
 import tensorflow as tf
 
 
 def create_batch_norm_layer(prev, n, activation):
     """
-    Creates a batch normalization layer for a neural network in tensorflow
+    Creates a batch normalization layer for a neural network in tensorflow.
+
     Args:
-        prev: activated output of the previous layer
-        n: number of nodes in the layer to be created
-        activation: activation function to be used on the output
-    Returns: a tensor of the activated output for the layer
+        prev: the activated output of the previous layer
+        n: the number of nodes in the layer to be created
+        activation: the activation function to be used on the output
+
+    Returns:
+        A tensor of the activated output for the layer
     """
-    # 1. Initialize weights using VarianceScaling
+    # 1. Initialize the base Dense layer
+    # We use VarianceScaling as requested and disable the internal bias
+    # because Batch Normalization's beta parameter acts as the bias.
     init = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    layer = tf.keras.layers.Dense(units=n, kernel_initializer=init,
+                                  use_bias=False)
+    z = layer(prev)
 
-    # 2. Create the Dense layer
-    # Keeping use_bias=True changes the random seed consumption.
-    model_layer = tf.keras.layers.Dense(units=n,
-                                        kernel_initializer=init,
-                                        use_bias=False)
+    # 2. Initialize trainable parameters gamma and beta
+    # gamma: scale parameter (vector of 1s)
+    # beta: offset parameter (vector of 0s)
+    gamma = tf.Variable(tf.ones([n]), trainable=True)
+    beta = tf.Variable(tf.zeros([n]), trainable=True)
 
-    Z = model_layer(prev)
+    # 3. Calculate mean and variance along the batch axis (0)
+    mean, variance = tf.nn.moments(z, axes=[0])
 
-    # 3. Apply Batch Normalization
-    # Epsilon must be exactly 1e-7 as requested
-    bn_layer = tf.keras.layers.BatchNormalization(epsilon=1e-7)
+    # 4. Apply Batch Normalization
+    # Formula: gamma * (z - mean) / sqrt(variance + epsilon) + beta
+    epsilon = 1e-7
+    bn_output = tf.nn.batch_normalization(
+        z,
+        mean,
+        variance,
+        offset=beta,
+        scale=gamma,
+        variance_epsilon=epsilon
+    )
 
-    Z_norm = bn_layer(Z)
-
-    # 4. Apply the activation function LAST
-    if activation is None:
-        return Z_norm
-    return activation(Z_norm)
+    # 5. Apply the activation function
+    return activation(bn_output)
