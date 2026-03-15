@@ -21,8 +21,8 @@ def create_mini_batches(X, Y, batch_size):
 
     # 2. Slice the data into batches
     for i in range(0, m, batch_size):
-        X_batch = X_s[i : i + batch_size]
-        Y_batch = Y_s[i : i + batch_size]
+        X_batch = X_s[i: i + batch_size]
+        Y_batch = Y_s[i: i + batch_size]
         mini_batches.append((X_batch, Y_batch))
 
     return mini_batches
