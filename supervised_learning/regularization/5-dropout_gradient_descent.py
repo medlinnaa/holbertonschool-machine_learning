@@ -42,7 +42,7 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
             # Backprop
             dA_prev = np.matmul(W.T, dZ)
 
-            # A¥pplydropout
+            #apply dropout
             D = cache['D{}'.format(i - 1)]
             dA_prev = dA_prev * D
             dA_prev = dA_prev / keep_prob
