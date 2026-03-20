@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """7-early_stopping.py"""
 
+
 def early_stopping(cost, opt_cost, threshold, patience, count):
     """
     Determines whether to stop training early based on validation cost.
