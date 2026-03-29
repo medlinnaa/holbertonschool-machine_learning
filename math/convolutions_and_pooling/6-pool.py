@@ -35,7 +35,7 @@ def pool(images, kernel_shape, stride, mode='max'):
         for j in range(out_w):
             h_start = i * sh
             w_start = j * sw
-            
+
             # Extract the window across all images and channels: (m, kh, kw, c)
             image_slice = images[:, h_start:h_start + kh,
                                  w_start:w_start + kw, :]
