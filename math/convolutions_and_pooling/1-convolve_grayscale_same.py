@@ -42,7 +42,8 @@ def convolve_grayscale_same(images, kernel):
     for i in range(h):
         for j in range(w):
             # Extract slice from padded images
-            # i and j here refer to the top-left corner of the window in padding
+            # i and j here refer to the top-left corner
+            # of the window in padding
             image_slice = images_padded[:, i:i+kh, j:j+kw]
             # Multiply and sum across all images simultaneously
             output[:, i, j] = np.sum(image_slice * kernel, axis=(1, 2))
