@@ -16,7 +16,8 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
         stride: tuple (sh, sw)
 
     Returns:
-        A numpy.ndarray containing the convolved images of shape (m, h_out, w_out, nc)
+        A numpy.ndarray containing
+        the convolved images of shape (m, h_out, w_out, nc)
     """
     m, h, w, c = images.shape
     kh, kw, _, nc = kernels.shape
