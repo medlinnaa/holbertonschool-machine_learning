@@ -29,7 +29,8 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
 
                     if mode == 'max':
                         # Get the slice from the original input
-                        a_prev_slice = A_prev[i, v_start:v_end, h_start:h_end, c]
+                        a_prev_slice = A_prev[i, v_start:v_end,
+                                        h_start:h_end, c]
                         # Create a mask where the max value was located
                         mask = (a_prev_slice == np.max(a_prev_slice))
                         # Only the max pixel gets the gradient
