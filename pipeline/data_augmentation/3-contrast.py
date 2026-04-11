@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+Module that contains the function change_contrast
 """
 import tensorflow as tf
 
