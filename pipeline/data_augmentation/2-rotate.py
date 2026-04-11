@@ -2,6 +2,7 @@
 """
 Module that contains the function rotate_image
 """
+import tensorflow as tf
 
 
 def rotate_image(image):
