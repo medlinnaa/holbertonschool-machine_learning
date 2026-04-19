@@ -36,5 +36,3 @@ All operations are implemented using **TensorFlow image processing utilities**.
 * TensorFlow 2.15
 * NumPy 1.25.2
 * Ubuntu 20.04
-
----
