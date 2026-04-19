@@ -2,7 +2,6 @@
 
 > Implementation of basic image data augmentation techniques using TensorFlow.
 
----
 
 ## 📖 Description
 
@@ -19,7 +18,6 @@ The transformations include:
 
 All operations are implemented using **TensorFlow image processing utilities**.
 
----
 
 ## 🧠 Concepts
 
@@ -28,7 +26,6 @@ All operations are implemented using **TensorFlow image processing utilities**.
 * Common techniques used in computer vision pipelines.
 * Helps models generalize better to unseen data.
 
----
 
 ## ⚙️ Requirements
 
