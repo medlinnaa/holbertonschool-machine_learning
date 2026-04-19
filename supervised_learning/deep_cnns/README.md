@@ -2,7 +2,6 @@
 
 > Implementation of ResNet blocks and ResNet-50 using TensorFlow/Keras.
 
----
 
 ## 📖 Description
 
@@ -14,7 +13,6 @@ This project implements key components of the **ResNet architecture**:
 
 These components use **residual connections** to solve the degradation problem in deep neural networks.
 
----
 
 ## 🧠 Concepts
 
@@ -23,7 +21,6 @@ These components use **residual connections** to solve the degradation problem i
 * Projection block: adjusts shape using 1×1 convolution
 * Enables training of very deep networks
 
----
 
 ## ⚙️ Requirements
 
