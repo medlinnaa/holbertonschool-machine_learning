@@ -2,7 +2,6 @@
 
 > Implementation of core CNN operations including forward/backward propagation, pooling layers, and a LeNet-5 style model using NumPy and TensorFlow/Keras.
 
----
 
 ## 📖 Description
 
@@ -18,7 +17,6 @@ It includes:
 
 These components form the basis of deep learning models used in computer vision tasks.
 
----
 
 ## 🧠 Concepts
 
@@ -34,7 +32,6 @@ These components form the basis of deep learning models used in computer vision 
   * Gradient flow through convolution and pooling layers
 * Fully connected layers for classification
 
----
 
 ## ⚙️ Requirements
 
