@@ -31,5 +31,3 @@ These components use **residual connections** to solve the degradation problem i
 * TensorFlow 2.15
 * NumPy 1.25.2
 * Ubuntu 20.04
-
----
