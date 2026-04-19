@@ -1,47 +1,49 @@
 # TensorFlow 2 & Keras
 
-> Implementation of neural network construction, training, evaluation, and model management using TensorFlow 2 and Keras.
+> Implementation of neural network building, training, evaluation, and model management using TensorFlow/Keras.
 
 
 ## 📖 Description
 
-This project focuses on building and training neural networks using **TensorFlow 2 / Keras**, covering both model design and full training pipelines.
+This project covers the fundamentals of building and training deep learning models using **TensorFlow 2 and Keras**.
 
-It includes:
+It includes different ways of constructing models, configuring training processes, and saving/loading models for reuse.
 
-* Sequential and Functional API model building
-* Optimization and compilation of models
-* One-hot encoding of labels
-* Training with mini-batch gradient descent
-* Validation-based training
-* Early stopping and learning rate decay
-* Model checkpointing (best model saving)
-* Saving and loading models, weights, and configurations
-* Model evaluation and prediction
+The project progresses from simple model creation to advanced training strategies such as:
+
+* Dropout regularization
+* L2 regularization
+* Early stopping
+* Learning rate decay
+* Model checkpointing
+* Model persistence (weights, config, full model)
 
 
 ## 🧠 Concepts
 
-* Keras Sequential API vs Functional API
-* Loss functions and optimizers (Adam)
+* Sequential vs Functional API in Keras
+* Dense neural networks
+* Regularization (L2, Dropout)
 * One-hot encoding for classification
-* Mini-batch training
+* Optimizers (Adam)
+* Loss functions (categorical crossentropy)
+* Training with `fit()`, validation split
 * Callbacks:
 
   * EarlyStopping
   * LearningRateScheduler
   * ModelCheckpoint
-* Model persistence:
+* Model saving/loading:
 
-  * Full model saving
-  * Weights-only saving
-  * JSON architecture saving
-* Evaluation and inference
+  * Full model
+  * Weights only
+  * JSON configuration
+* Model evaluation and prediction
 
 
 ## ⚙️ Requirements
 
 * Python 3.9
-* TensorFlow 2.15
-* NumPy 1.25.2
+* TensorFlow 2.x
+* NumPy
 * Ubuntu 20.04
