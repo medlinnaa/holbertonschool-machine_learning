@@ -42,5 +42,3 @@ These components form the basis of deep learning models used in computer vision 
 * NumPy 1.25.2
 * TensorFlow 2.15
 * Ubuntu 20.04
-
----
