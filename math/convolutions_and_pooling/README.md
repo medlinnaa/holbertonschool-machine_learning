@@ -2,7 +2,6 @@
 
 > Implementation of convolution and pooling operations for grayscale and multi-channel images using NumPy.
 
----
 
 ## 📖 Description
 
@@ -18,7 +17,6 @@ It covers:
 
 These operations are fundamental for feature extraction and dimensionality reduction in deep learning models.
 
----
 
 ## 🧠 Concepts
 
@@ -36,7 +34,6 @@ These operations are fundamental for feature extraction and dimensionality reduc
   * Max pooling → selects strongest activation
   * Average pooling → smooths features and reduces noise
 
----
 
 ## ⚙️ Requirements
 
