@@ -43,5 +43,3 @@ These operations are fundamental for feature extraction and dimensionality reduc
 * Python 3.9
 * NumPy 1.25.2
 * Ubuntu 20.04
-
----
