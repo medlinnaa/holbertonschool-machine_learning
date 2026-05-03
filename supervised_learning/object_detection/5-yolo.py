@@ -108,7 +108,7 @@ class Yolo:
                 interpolation=cv2.INTER_LINEAR
             )
 
-            resized = resized.astype(np.float32) / 255
+            resized = resized / 255.0
 
             pimages.append(resized)
 
