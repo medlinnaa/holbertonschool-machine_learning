@@ -92,42 +92,24 @@ class Yolo:
         return imgs, paths
 
     def preprocess_images(self, images):
-        """
-        Preprocesses images for YOLO model
+    """Preprocesses images for YOLO model"""
+    input_h = self.model.input.shape[1]
+    input_w = self.model.input.shape[2]
 
-        Parameters:
-        images (list of numpy.ndarray): list of images
+    pimages = []
+    image_shapes = []
 
-        Returns:
-        tuple:
-            pimages (numpy.ndarray): preprocessed images of shape
-                (ni, input_h, input_w, 3)
-            image_shapes (numpy.ndarray): original image shapes (h, w)
-                of shape (ni, 2)
-        """
-        input_h = self.model.input.shape[1]
-        input_w = self.model.input.shape[2]
+    for img in images:
+        image_shapes.append((img.shape[0], img.shape[1]))
 
-        pimages = []
-        image_shapes = []
+        resized = cv2.resize(
+            img,
+            (input_w, input_h),
+            interpolation=cv2.INTER_CUBIC
+        )
 
-        for img in images:
-            # Save original shape (height, width)
-            image_shapes.append((img.shape[0], img.shape[1]))
+        resized = resized.astype(np.float32) / 255
 
-            # Resize image
-            resized = cv2.resize(
-                img,
-                (input_w, input_h),
-                interpolation=cv2.INTER_CUBIC
-            )
+        pimages.append(resized)
 
-            # Normalize to [0, 1]
-            resized = resized / 255.0
-
-            pimages.append(resized)
-
-        pimages = np.array(pimages)
-        image_shapes = np.array(image_shapes)
-
-        return pimages, image_shapes
+    return np.array(pimages), np.array(image_shapes)
