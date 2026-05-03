@@ -92,28 +92,18 @@ class Yolo:
         return imgs, paths
 
     def preprocess_images(self, images):
-        """
-        Prepares images for the Yolo model
-        """
-        # Get expected input shape from the model (e.g., 416, 416)
-        input_h = self.model.input.shape[1]
-        input_w = self.model.input.shape[2]
-
-        pimages = []
-        image_shapes = []
+        """ Preprocesses images for the Darknet model """
+        h = self.model.input.shape[1]
+        w = self.model.input.shape[2]
+        pimages, shapes = [], []
 
         for img in images:
-            # 1. Store original shape (height, width)
-            image_shapes.append(img.shape[:2])
+            shapes.append(img.shape[:2])
+            # Resize
+            res = cv2.resize(img, (w, h), interpolation=cv2.INTER_CUBIC)
+            # BGR to RGB conversion
+            rgb = cv2.cvtColor(res, cv2.COLOR_BGR2RGB)
+            # Rescale
+            pimages.append(rgb / 255.0)
 
-            # 2. Resize using Inter-Cubic Interpolation
-            resized = cv2.resize(img, (input_w, input_h),
-                                 interpolation=cv2.INTER_CUBIC)
-
-            # 3. Convert BGR (OpenCV default) to RGB
-            rgb_img = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
-
-            # 4. Rescale pixel values from [0, 255] to [0, 1]
-            pimages.append(resized / 255.0)
-
-        return np.array(pimages), np.array(image_shapes)
+        return np.array(pimages), np.array(shapes)
