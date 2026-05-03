@@ -93,29 +93,40 @@ class Yolo:
 
     def preprocess_images(self, images):
         """
-        Prepares images for the Yolo model
+        Preprocesses images for YOLO model
+
+        Parameters:
+        images (list of numpy.ndarray): list of images
+
+        Returns:
+        tuple:
+            pimages (numpy.ndarray): preprocessed images of shape
+                (ni, input_h, input_w, 3)
+            image_shapes (numpy.ndarray): original image shapes (h, w)
+                of shape (ni, 2)
         """
-        # Get expected input shape from the model and cast to int
-        input_h = int(self.model.input.shape[1])
-        input_w = int(self.model.input.shape[2])
+        input_h = self.model.input.shape[1]
+        input_w = self.model.input.shape[2]
 
         pimages = []
         image_shapes = []
 
         for img in images:
-            # 1. Store original shape (height, width)
-            image_shapes.append(img.shape[:2])
+            # Save original shape (height, width)
+            image_shapes.append((img.shape[0], img.shape[1]))
 
-            # 2. Resize using Inter-Cubic Interpolation
-            # Note: cv2.resize takes (width, height)
-            resized = cv2.resize(img, (input_w, input_h),
-                                 interpolation=cv2.INTER_CUBIC)
+            # Resize image
+            resized = cv2.resize(
+                img,
+                (input_w, input_h),
+                interpolation=cv2.INTER_CUBIC
+            )
 
-            # 3. Rescale pixel values to [0, 1]
-            rescaled = resized / 255.0
-            pimages.append(rescaled)
+            # Normalize to [0, 1]
+            resized = resized / 255.0
 
-        # Convert lists to numpy arrays
+            pimages.append(resized)
+
         pimages = np.array(pimages)
         image_shapes = np.array(image_shapes)
 
