@@ -110,7 +110,10 @@ class Yolo:
             resized = cv2.resize(img, (input_w, input_h),
                                  interpolation=cv2.INTER_CUBIC)
 
-            # 3. Rescale pixel values from [0, 255] to [0, 1]
+            # 3. Convert BGR (OpenCV default) to RGB
+            rgb_img = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+
+            # 4. Rescale pixel values from [0, 255] to [0, 1]
             pimages.append(resized / 255.0)
 
         return np.array(pimages), np.array(image_shapes)
