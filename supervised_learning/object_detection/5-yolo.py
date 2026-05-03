@@ -95,8 +95,7 @@ class Yolo:
         """
         Preprocesses images for YOLO model
         """
-        # 1. Get input dimensions from the model and cast strictly to int
-        # input_h and input_w are index 1 and 2 in (None, H, W, 3)
+        # 1. Get input dimensions from the model
         input_h = int(self.model.input.shape[1])
         input_w = int(self.model.input.shape[2])
 
@@ -105,10 +104,9 @@ class Yolo:
 
         for img in images:
             # 2. Save original shape (height, width)
-            image_shapes.append(img.shape[:2])
+            image_shapes.append([img.shape[0], img.shape[1]])
 
             # 3. Resize using inter-cubic interpolation
-            # cv2.resize expects dsize as (width, height)
             resized = cv2.resize(img, (input_w, input_h),
                                  interpolation=cv2.INTER_CUBIC)
 
@@ -116,9 +114,8 @@ class Yolo:
             rescaled = resized / 255.0
             pimages.append(rescaled)
 
-        # 5. Convert lists to numpy arrays
-        # Use np.array() to wrap the list of processed images
-        pimages = np.array(pimages)
-        image_shapes = np.array(image_shapes)
+        # 5. Convert to numpy arrays with explicit deep-learning standard dtypes
+        pimages = np.array(pimages, dtype=np.float32)
+        image_shapes = np.array(image_shapes, dtype=np.int32)
 
         return pimages, image_shapes
