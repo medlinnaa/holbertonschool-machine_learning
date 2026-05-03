@@ -92,24 +92,33 @@ class Yolo:
         return imgs, paths
 
     def preprocess_images(self, images):
-        """Preprocesses images for YOLO model"""
-        input_h = self.model.input.shape[1]
-        input_w = self.model.input.shape[2]
+        """
+        Preprocesses images for YOLO model
+        """
+        # 1. Get input dimensions from the model and cast strictly to int
+        # input_h and input_w are index 1 and 2 in (None, H, W, 3)
+        input_h = int(self.model.input.shape[1])
+        input_w = int(self.model.input.shape[2])
 
         pimages = []
         image_shapes = []
 
         for img in images:
-            image_shapes.append((img.shape[0], img.shape[1]))
+            # 2. Save original shape (height, width)
+            image_shapes.append(img.shape[:2])
 
-            resized = cv2.resize(
-                img,
-                (input_w, input_h),
-                interpolation=cv2.INTER_CUBIC
-            )
+            # 3. Resize using inter-cubic interpolation
+            # cv2.resize expects dsize as (width, height)
+            resized = cv2.resize(img, (input_w, input_h),
+                                 interpolation=cv2.INTER_CUBIC)
 
-            resized = resized / 255.0
+            # 4. Rescale to [0, 1]
+            rescaled = resized / 255.0
+            pimages.append(rescaled)
 
-            pimages.append(resized)
+        # 5. Convert lists to numpy arrays
+        # Use np.array() to wrap the list of processed images
+        pimages = np.array(pimages)
+        image_shapes = np.array(image_shapes)
 
-        return np.array(pimages), np.array(image_shapes)
+        return pimages, image_shapes
