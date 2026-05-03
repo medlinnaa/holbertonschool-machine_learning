@@ -105,7 +105,7 @@ class Yolo:
             resized = cv2.resize(
                 img,
                 (input_w, input_h),
-                interpolation=cv2.INTER_LINEAR
+                interpolation=cv2.INTER_CUBIC
             )
 
             resized = resized / 255.0
