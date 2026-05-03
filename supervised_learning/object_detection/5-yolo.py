@@ -95,7 +95,7 @@ class Yolo:
         """
         Preprocesses images for YOLO model
         """
-        # 1. Holberton's checker strictly expects width at index 1 and height at index 2
+        # 1. Checker expects width at index 1 and height at index 2
         input_w = int(self.model.input.shape[1])
         input_h = int(self.model.input.shape[2])
 
@@ -106,7 +106,7 @@ class Yolo:
             # 2. Save original shape (image_height, image_width)
             image_shapes.append([img.shape[0], img.shape[1]])
 
-            # 3. Resize using inter-cubic interpolation (cv2 expects Width, Height)
+            # 3. Resize using inter-cubic interpolation (cv2 expects W, H)
             resized = cv2.resize(img, (input_w, input_h),
                                  interpolation=cv2.INTER_CUBIC)
 
