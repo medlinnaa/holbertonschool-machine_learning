@@ -195,7 +195,7 @@ class NST:
         with tf.GradientTape() as tape:
             # Explicitly watch the image tensor to track its gradients
             tape.watch(generated_image)
-            
+
             # Calculate the total cost
             J_total, J_content, J_style = self.total_cost(generated_image)
 
