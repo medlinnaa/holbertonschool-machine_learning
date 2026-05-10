@@ -169,22 +169,17 @@ class NST:
            generated_image.shape != s:
             raise TypeError(f"generated_image must be a tensor of shape {s}")
 
-        # Scale from [0, 1] to [0, 255] and preprocess for VGG19
         preprocessed = tf.keras.applications.vgg19.preprocess_input(
             generated_image * 255.0)
 
-        # Pass the preprocessed image through the network
         outputs = self.model(preprocessed)
 
-        # Split outputs into style and content
         style_outputs = outputs[:-1]
         content_output = outputs[-1]
 
-        # Calculate individual costs
         J_style = self.style_cost(style_outputs)
         J_content = self.content_cost(content_output)
 
-        # Calculate total cost using the alpha and beta weights
         J_total = (self.alpha * J_content) + (self.beta * J_style)
 
         return J_total, J_content, J_style
