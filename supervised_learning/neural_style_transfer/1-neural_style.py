@@ -81,7 +81,8 @@ class NST:
     def load_model(self):
         """
         Creates the model used to calculate cost.
-        Replaces MaxPooling2D with AveragePooling2D and targets specific layers.
+        Replaces MaxPooling2D with AveragePooling2D
+        and targets specific layers.
         """
         vgg = tf.keras.applications.VGG19(include_top=False,
                                           weights='imagenet')
