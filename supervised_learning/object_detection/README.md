@@ -1,4 +1,4 @@
-# YOLOv3 Object Detection
+# Object Detection
 
 > Implementation of the YOLOv3 object detection algorithm pipeline using TensorFlow/Keras and OpenCV.
 
