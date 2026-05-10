@@ -80,7 +80,8 @@ class NST:
         # Rescale pixel values to [0, 1]
         image = image / 255.0
 
-        # Bicubic interpolation can slightly overshoot [0, 1] bounds, so we clip
+        # Bicubic interpolation can slightly overshoot [0, 1] bounds,
+        # so we clip
         image = tf.clip_by_value(image, 0.0, 1.0)
 
         return image
