@@ -161,7 +161,16 @@ class NST:
     @staticmethod
     def variational_cost(generated_image):
         """Calculates the variational cost for the generated image."""
-        return tf.image.total_variation(generated_image)[0]
+        if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or \
+           len(generated_image.shape) not in [3, 4]:
+            raise TypeError("image must be a tensor of rank 3 or 4")
+
+        var_cost = tf.image.total_variation(generated_image)
+
+        # total_variation returns a 1D tensor if 4D input, scalar if 3D input
+        if len(generated_image.shape) == 4:
+            return var_cost[0]
+        return var_cost
 
     def total_cost(self, generated_image):
         """Calculates the total cost for the generated image."""
