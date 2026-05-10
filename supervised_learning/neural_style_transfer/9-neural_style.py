@@ -253,4 +253,6 @@ class NST:
                     tf.clip_by_value(generated_image, 0.0, 1.0))
 
         # Returns the 4D numpy array copy of the best resulting image
-        return best_image[0] if best_image.shape[0] == 1 else best_image, best_cost
+        if best_image.shape[0] == 1:
+            return best_image[0], best_cost
+        return best_image, best_cost
