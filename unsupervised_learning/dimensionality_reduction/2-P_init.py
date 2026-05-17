@@ -12,7 +12,8 @@ def P_init(X, perplexity):
         X is a numpy.ndarray of shape (n, d) containing the dataset
             n is the number of data points
             d is the number of dimensions in each point
-        perplexity is the perplexity that all Gaussian distributions should have
+        perplexity is the perplexity that
+        all Gaussian distributions should have
 
     Returns:
         (D, P, betas, H)
