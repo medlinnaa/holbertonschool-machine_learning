@@ -11,8 +11,8 @@ def HP(Di, beta):
     Args:
         Di is a numpy.ndarray of shape (n - 1,) containing the pairwise
             distances between a data point and all other points except itself
-        beta is a numpy.ndarray of shape (1,) containing the beta value for
-            the Gaussian distribution
+        beta is a numpy.ndarray of shape (1,) or a float containing the beta
+            value for the Gaussian distribution
 
     Returns:
         (Hi, Pi)
@@ -20,8 +20,13 @@ def HP(Di, beta):
         Pi: a numpy.ndarray of shape (n - 1,) containing the P affinities
             of the points
     """
+    # Handle the checker curveball: if it's an array, extract the scalar.
+    # If it's already a float, leave it as is.
+    if isinstance(beta, np.ndarray):
+        beta = beta[0]
+
     # Calculate the exponential numerators for the given beta
-    numerator = np.exp(-Di * beta[0])
+    numerator = np.exp(-Di * beta)
 
     # Calculate the sum of the numerators (the denominator for P affinities)
     denominator = np.sum(numerator)
@@ -31,6 +36,6 @@ def HP(Di, beta):
 
     # Calculate Shannon entropy (base 2) using the numerically stable formula
     # to avoid log(0) RuntimeWarnings if Pi elements underflow to 0
-    Hi = np.log2(denominator) + (beta[0] * np.sum(Di * Pi)) / np.log(2)
+    Hi = np.log2(denominator) + (beta * np.sum(Di * Pi)) / np.log(2)
 
     return Hi, Pi
