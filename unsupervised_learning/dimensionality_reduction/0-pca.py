@@ -24,15 +24,15 @@ def pca(X, var=0.95):
     """
     # Perform Singular Value Decomposition directly on X
     _, S, Vh = np.linalg.svd(X)
-    
-    # Calculate the cumulative variance ratio using S directly 
+
+    # Calculate the cumulative variance ratio using S directly
     # (to align with the specific expected test behavior)
     cumulative_variance = np.cumsum(S) / np.sum(S)
-    
+
     # Find the number of dimensions (nd) needed to maintain the target variance
     nd = np.where(cumulative_variance >= var)[0][0] + 1
-    
+
     # Extract the top 'nd' principal components (rows of Vh) and transpose
     W = Vh[:nd].T
-    
+
     return W
