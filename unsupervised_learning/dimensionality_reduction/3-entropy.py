@@ -10,9 +10,9 @@ def HP(Di, beta):
 
     Args:
         Di is a numpy.ndarray of shape (n - 1,) containing the pairwise
-            distances between a data point and all other points except itself
+        distances between a data point and all other points except itself
         beta is a numpy.ndarray of shape (1,) or float containing the beta 
-            value for the Gaussian distribution
+        value for the Gaussian distribution
 
     Returns:
         (Hi, Pi)
