@@ -32,7 +32,8 @@ def Q_affinities(Y):
     # Set the diagonal elements to 0 (t-SNE defines affinities to oneself as 0)
     np.fill_diagonal(num, 0)
 
-    # Calculate Q by dividing the numerator matrix by the sum of all its elements
+    # Calculate Q by dividing the numerator matrix
+    # by the sum of all its elements
     Q = num / np.sum(num)
 
     return Q, num
