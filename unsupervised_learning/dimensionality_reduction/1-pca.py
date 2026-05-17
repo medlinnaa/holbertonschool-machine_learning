@@ -22,14 +22,14 @@ def pca(X, ndim):
     """
     # Center the dataset by subtracting the mean of each dimension
     X_centered = X - np.mean(X, axis=0)
-    
+
     # Perform Singular Value Decomposition on the centered data
     _, _, Vh = np.linalg.svd(X_centered)
-    
+
     # Extract the top 'ndim' principal components (rows of Vh) and transpose
     W = Vh[:ndim].T
-    
+
     # Project the centered data onto the new dimensional space
     T = np.matmul(X_centered, W)
-    
+
     return T
