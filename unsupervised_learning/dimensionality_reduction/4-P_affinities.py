@@ -10,9 +10,12 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     Calculates the symmetric P affinities of a data set.
 
     Args:
-        X (numpy.ndarray): shape (n, d) containing the dataset to be transformed
-        tol (float): maximum tolerance allowed for the difference in Shannon entropy
-        perplexity (float): the perplexity that all Gaussian distributions should have
+        X (numpy.ndarray): shape (n, d) containing
+        the dataset to be transformed
+        tol (float): maximum tolerance allowed
+        for the difference in Shannon entropy
+        perplexity (float): the perplexity
+        that all Gaussian distributions should have
 
     Returns:
         numpy.ndarray: shape (n, n) containing the symmetric P affinities
@@ -22,7 +25,8 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
     # Initialize variables using our previous function
     D, P, betas, H_target = P_init(X, perplexity)
 
-    # Loop through each data point to calculate its conditional P affinities
+    # Loop through each data point
+    # to calculate its conditional P affinities
     for i in range(n):
         # Extract distances for point i, excluding the distance to itself
         Di = np.append(D[i, :i], D[i, i+1:])
@@ -43,7 +47,8 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
             if np.abs(H_diff) <= tol:
                 break
 
-            # If entropy is too high, variance is too high, so we must INCREASE beta
+            # If entropy is too high, variance is too high
+            # so we must INCREASE beta
             if H_diff > 0:
                 beta_min = beta
                 if beta_max is None:
@@ -51,7 +56,8 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                 else:
                     beta = (beta + beta_max) / 2.0
 
-            # If entropy is too low, variance is too low, so we must DECREASE beta
+            # If entropy is too low, variance is too low
+            # so we must DECREASE beta
             else:
                 beta_max = beta
                 if beta_min is None:
@@ -60,7 +66,8 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                     beta = (beta + beta_min) / 2.0
 
         # Re-insert the calculated Pi values into the P matrix at row i
-        # We place them before and after the diagonal index to leave the diagonal as 0
+        # We place them before and after
+        # the diagonal index to leave the diagonal as 0
         P[i, :i] = Pi[:i]
         P[i, i+1:] = Pi[i:]
 
