@@ -36,4 +36,4 @@ def variance(X, C):
     # The total variance is the sum of these minimum squared distances
     var = np.sum(min_dist_sq)
 
-    return float(var)
+    return var
