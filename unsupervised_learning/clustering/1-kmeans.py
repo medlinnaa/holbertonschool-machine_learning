@@ -39,7 +39,8 @@ def kmeans(X, k, iterations=1000):
         # Calculate distances using broadcasting
         # X shape: (n, d) -> (n, 1, d)
         # C shape: (k, d) -> (1, k, d) (Implicitly broadcasted by numpy)
-        # Difference results in (n, k, d), taking norm along axis 2 gives (n, k)
+        # Difference results in (n, k, d),
+        # taking norm along axis 2 gives (n, k)
         distances = np.linalg.norm(X[:, np.newaxis] - C, axis=2)
 
         # Assign points to the closest cluster
@@ -52,7 +53,8 @@ def kmeans(X, k, iterations=1000):
             # Handle empty clusters by reinitializing
             if len(cluster_points) == 0:
                 # Second use of np.random.uniform: Reinitialize empty centroid
-                C[j] = np.random.uniform(low=min_vals, high=max_vals, size=(1, d))[0]
+                C[j] = np.random.uniform(
+                    low=min_vals, high=max_vals, size=(1, d))[0]
             else:
                 C[j] = cluster_points.mean(axis=0)
 
