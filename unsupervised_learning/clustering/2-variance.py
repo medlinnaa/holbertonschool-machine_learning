@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Module for calculating the total intra-cluster variance of a dataset.
+Module calculating the total intra-cluster variance of a dataset.
 """
 import numpy as np
 
 
 def variance(X, C):
     """
-    Calculates the total intra-cluster variance for a dataset.
+    Calculates the total intra-cluster variance.
 
     Args:
         X (numpy.ndarray): The dataset of shape (n, d).
@@ -30,7 +30,7 @@ def variance(X, C):
     # dist_sq shape becomes (n, k) after summing along the features axis
     dist_sq = np.sum((X[:, np.newaxis] - C) ** 2, axis=2)
 
-    # Find the squared distance to the closest centroid for each point
+    # Find the squared distance to the closest centroid
     min_dist_sq = np.min(dist_sq, axis=1)
 
     # The total variance is the sum of these minimum squared distances
