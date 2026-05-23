@@ -39,15 +39,15 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
         return None, None, None, None, None
 
     # Step 2: Calculate initial expectations
-    g, l = expectation(X, pi, m, S)
-    if g is None or l is None:
+    g, log_l = expectation(X, pi, m, S)
+    if g is None or log_l is None:
         return None, None, None, None, None
 
     # Execute the EM steps up to the iterations limit
     for i in range(iterations):
         if verbose and i % 10 == 0:
             print("Log Likelihood after {} iterations: {}".format(
-                i, round(l, 5)))
+                i, round(log_l, 5)))
 
         # Maximization step updates the parameters
         pi, m, S = maximization(X, g)
@@ -60,18 +60,18 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
             return None, None, None, None, None
 
         # Check the early stopping condition
-        if abs(l_new - l) <= tol:
+        if abs(l_new - log_l) <= tol:
             if verbose:
                 print("Log Likelihood after {} iterations: {}".format(
                     i + 1, round(l_new, 5)))
-            l = l_new
+            log_l = l_new
             break
 
-        l = l_new
+        log_l = l_new
     else:
         # If the loop finishes without breaking early, print the final state
         if verbose:
             print("Log Likelihood after {} iterations: {}".format(
-                iterations, round(l, 5)))
+                iterations, round(log_l, 5)))
 
-    return pi, m, S, g, l
+    return pi, m, S, g, log_l
