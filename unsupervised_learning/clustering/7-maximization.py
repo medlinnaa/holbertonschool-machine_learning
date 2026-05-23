@@ -54,7 +54,8 @@ def maximization(X, g):
         # Apply the posterior probability weights to the differences
         weighted_diff = g[j, :, np.newaxis] * diff
 
-        # Calculate the outer product and divide by the effective number of points
+        # Calculate the outer product and
+        # divide by the effective number of points
         S[j] = np.matmul(weighted_diff.T, diff) / Nk[j]
 
     return pi, m, S
