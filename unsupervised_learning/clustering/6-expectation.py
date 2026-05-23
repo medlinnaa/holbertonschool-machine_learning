@@ -58,9 +58,9 @@ def expectation(X, pi, m, S):
     marginal = np.sum(g, axis=0)
 
     # Calculate the total log likelihood
-    l = np.sum(np.log(marginal))
+    log_l = np.sum(np.log(marginal))
 
     # Normalize the likelihoods to get the true posterior probabilities (g)
     g = g / marginal
 
-    return g, l
+    return g, log_l
