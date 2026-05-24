@@ -2,7 +2,6 @@
 
 > Implementation of data cleaning, structural manipulation, and time-series analysis using Python's Pandas library.
 
----
 
 ## 📖Description
 
@@ -10,7 +9,6 @@ This project builds a structured data processing pipeline for financial datasets
 
 The scripts form a toolkit designed to ingest information from various origins, normalize inconsistent formatting, and seamlessly merge multiple datasets. Rather than simply deleting incomplete data, the pipeline focuses on intelligent data recovery and preparation, ultimately culminating in the aggregation of cleaned time-series data to visualize long-term market trends.
 
----
 
 ## 🧠Concepts
 
@@ -20,7 +18,6 @@ The scripts form a toolkit designed to ingest information from various origins, 
 * Data Imputation & Pruning: Resolving `NaN` values safely by applying forward-filling techniques and localized row-value mapping, combined with strategic column dropping to maintain data integrity.
 * Statistical Summarization: Extracting descriptive statistics automatically to evaluate the variance, bounds, and central tendencies of large financial datasets without manual computation.
 
----
 
 ## ⚙️Requirements
 
