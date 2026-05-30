@@ -74,8 +74,9 @@ class BayesianOptimization:
         # Calculate Z and EI only where sigma > 0 to prevent division by zero
         Z[sigma > 0] = imp[sigma > 0] / sigma[sigma > 0]
 
-        EI[sigma > 0] = (imp[sigma > 0] * norm.cdf(Z[sigma > 0])
-                         + sigma[sigma > 0] * norm.pdf(Z[sigma > 0]))
+        term1 = imp[sigma > 0] * norm.cdf(Z[sigma > 0])
+        term2 = sigma[sigma > 0] * norm.pdf(Z[sigma > 0])
+        EI[sigma > 0] = term1 + term2
 
         # Find the point in X_s that maximizes the Expected Improvement
         X_next = self.X_s[np.argmax(EI)]
