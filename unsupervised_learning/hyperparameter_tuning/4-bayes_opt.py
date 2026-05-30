@@ -63,7 +63,8 @@ class BayesianOptimization:
             imp = Y_opt - mu - self.xsi
         else:
             Y_opt = np.max(self.gp.Y)
-            # The improvement is positive when mu is higher than the current max
+            # The improvement is positive
+            # when mu is higher than the current max
             imp = mu - Y_opt - self.xsi
 
         # Initialize Z and EI arrays with zeros to safely handle sigma == 0
@@ -73,8 +74,8 @@ class BayesianOptimization:
         # Calculate Z and EI only where sigma > 0 to prevent division by zero
         Z[sigma > 0] = imp[sigma > 0] / sigma[sigma > 0]
 
-        EI[sigma > 0] = (imp[sigma > 0] * norm.cdf(Z[sigma > 0]) +
-                         sigma[sigma > 0] * norm.pdf(Z[sigma > 0]))
+        EI[sigma > 0] = (imp[sigma > 0] * norm.cdf(Z[sigma > 0])
+                         + sigma[sigma > 0] * norm.pdf(Z[sigma > 0]))
 
         # Find the point in X_s that maximizes the Expected Improvement
         X_next = self.X_s[np.argmax(EI)]
