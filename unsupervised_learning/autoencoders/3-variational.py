@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """
-Module for creating a Variational Autoencoder.
+Module for creating a Sparse Autoencoder.
 """
 import tensorflow.keras as keras
 
 
-def autoencoder(input_dims, hidden_layers, latent_dims):
+def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """
-    Creates a variational autoencoder model.
+    Creates a sparse autoencoder model.
 
     Args:
         input_dims (int): Dimensions of the model input.
         hidden_layers (list): Number of nodes for each hidden layer in the
             encoder.
         latent_dims (int): Dimensions of the latent space representation.
+        lambtha (float): Regularization parameter used for L1 regularization
+            on the encoded output.
 
     Returns:
         tuple: (encoder, decoder, auto)
@@ -25,28 +27,15 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     for nodes in hidden_layers:
         encoded = keras.layers.Dense(nodes, activation='relu')(encoded)
 
-    # Latent space parameters (no activation function)
-    z_mean = keras.layers.Dense(
-        latent_dims, activation=None
+    # Apply L1 regularization to the activity (output) of the latent layer
+    reg = keras.regularizers.l1(lambtha)
+    latent_outputs = keras.layers.Dense(
+        latent_dims,
+        activation='relu',
+        activity_regularizer=reg
     )(encoded)
-    z_log_var = keras.layers.Dense(
-        latent_dims, activation=None
-    )(encoded)
 
-    def sampling(args):
-        """Samples from the latent space normal distribution."""
-        z_m, z_l_v = args
-        batch = keras.backend.shape(z_m)[0]
-        dim = keras.backend.int_shape(z_m)[1]
-        epsilon = keras.backend.random_normal(shape=(batch, dim))
-        return z_m + keras.backend.exp(0.5 * z_l_v) * epsilon
-
-    # Lambda layer to wrap the sampling function
-    z = keras.layers.Lambda(sampling)([z_mean, z_log_var])
-
-    encoder = keras.Model(
-        encoder_inputs, [z, z_mean, z_log_var], name="encoder"
-    )
+    encoder = keras.Model(encoder_inputs, latent_outputs, name="encoder")
 
     # --- Decoder ---
     decoder_inputs = keras.Input(shape=(latent_dims,))
@@ -63,28 +52,11 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # --- Full Autoencoder ---
     auto_inputs = keras.Input(shape=(input_dims,))
-    # We unpack the encoder outputs since we only need 'z' to pass to decoder
-    z_out, z_m_out, z_l_v_out = encoder(auto_inputs)
-    auto_outputs = decoder(z_out)
+    auto_outputs = decoder(encoder(auto_inputs))
     auto = keras.Model(auto_inputs, auto_outputs, name="autoencoder")
 
-    # --- Custom VAE Loss Function ---
-    def vae_loss(y_true, y_pred):
-        """Calculates the combined VAE loss."""
-        # 1. Reconstruction Loss
-        reconstruction_loss = keras.losses.binary_crossentropy(
-            y_true, y_pred)
-        # Keras BCE calculates the mean; we multiply to get the sum
-        reconstruction_loss *= input_dims
-
-        # 2. Kullback-Leibler (KL) Divergence
-        kl_loss = (1 + z_l_v_out - keras.backend.square(z_m_out) -
-                   keras.backend.exp(z_l_v_out))
-        kl_loss = keras.backend.sum(kl_loss, axis=-1)
-        kl_loss *= -0.5
-
-        return reconstruction_loss + kl_loss
-
-    auto.compile(optimizer='adam', loss=vae_loss)
+    # The fix: explicitly instantiate the Adam optimizer object
+    adam_optimizer = keras.optimizers.Adam()
+    auto.compile(optimizer=adam_optimizer, loss='binary_crossentropy')
 
     return encoder, decoder, auto
