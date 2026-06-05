@@ -33,11 +33,12 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     def sampling(args):
         """Reparameterization trick: sample z from N(mean, var)."""
         z_mean, z_log_var = args
-        shape = keras.backend.shape(z_mean)
-        epsilon = keras.backend.random_normal(shape=shape)
+        epsilon = keras.backend.random_normal(
+            shape=keras.backend.shape(z_mean))
         return z_mean + keras.backend.exp(0.5 * z_log_var) * epsilon
 
-    z = keras.layers.Lambda(sampling)([mean, log_var])
+    z = keras.layers.Lambda(
+        sampling, output_shape=(latent_dims,))([mean, log_var])
     encoder = keras.Model(encoder_inputs, [z, mean, log_var])
 
     # --- Decoder ---
@@ -54,15 +55,17 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     outputs = decoder(z_out)
     auto = keras.Model(encoder_inputs, outputs)
 
-    def vae_loss(y_true, y_pred):
-        """Reconstruction (BCE) loss plus KL divergence."""
-        reconstruction = keras.backend.binary_crossentropy(y_true, y_pred)
-        reconstruction = keras.backend.sum(reconstruction, axis=1)
-        kl = 1 + log_var_out - keras.backend.square(mean_out)
-        kl = kl - keras.backend.exp(log_var_out)
-        kl = -0.5 * keras.backend.sum(kl, axis=1)
-        return reconstruction + kl
+    # KL divergence term registered on the model's real forward tensors.
+    kl = 1 + log_var_out - keras.backend.square(mean_out)
+    kl = kl - keras.backend.exp(log_var_out)
+    kl = -0.5 * keras.backend.sum(kl, axis=1)
+    auto.add_loss(keras.backend.mean(kl))
 
-    auto.compile(optimizer='adam', loss=vae_loss)
+    def reconstruction_loss(y_true, y_pred):
+        """Binary cross-entropy summed over the input dimensions."""
+        bce = keras.backend.binary_crossentropy(y_true, y_pred)
+        return keras.backend.sum(bce, axis=1)
+
+    auto.compile(optimizer='adam', loss=reconstruction_loss)
 
     return encoder, decoder, auto
