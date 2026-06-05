@@ -33,9 +33,8 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     def sampling(args):
         """Reparameterization trick: sample z from N(mean, var)."""
         z_mean, z_log_var = args
-        batch = keras.backend.shape(z_mean)[0]
-        dim = keras.backend.int_shape(z_mean)[1]
-        epsilon = keras.backend.random_normal(shape=(batch, dim))
+        shape = keras.backend.shape(z_mean)
+        epsilon = keras.backend.random_normal(shape=shape)
         return z_mean + keras.backend.exp(0.5 * z_log_var) * epsilon
 
     z = keras.layers.Lambda(sampling)([mean, log_var])
@@ -51,15 +50,16 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     decoder = keras.Model(decoder_inputs, decoder_outputs)
 
     # --- Full autoencoder ---
-    outputs = decoder(encoder(encoder_inputs)[0])
+    z_out, mean_out, log_var_out = encoder(encoder_inputs)
+    outputs = decoder(z_out)
     auto = keras.Model(encoder_inputs, outputs)
 
     def vae_loss(y_true, y_pred):
         """Reconstruction (BCE) loss plus KL divergence."""
         reconstruction = keras.backend.binary_crossentropy(y_true, y_pred)
         reconstruction = keras.backend.sum(reconstruction, axis=1)
-        kl = 1 + log_var - keras.backend.square(mean)
-        kl = kl - keras.backend.exp(log_var)
+        kl = 1 + log_var_out - keras.backend.square(mean_out)
+        kl = kl - keras.backend.exp(log_var_out)
         kl = -0.5 * keras.backend.sum(kl, axis=1)
         return reconstruction + kl
 
