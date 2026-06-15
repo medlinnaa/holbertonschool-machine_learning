@@ -11,7 +11,8 @@ import numpy as np
 
 class WGAN_GP(keras.Model):
     """
-    A Wasserstein GAN model with Gradient Penalty and weight loading capabilities.
+    A Wasserstein GAN model with Gradient Penalty
+    and weight loading capabilities.
     """
 
     def __init__(self, generator, discriminator, latent_generator,
