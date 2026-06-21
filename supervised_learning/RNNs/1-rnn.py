@@ -24,7 +24,8 @@ def rnn(rnn_cell, X, h_0):
         tuple: (H, Y)
             H is a numpy.ndarray containing all of the hidden states,
                 including the initial hidden state h_0. Shape: (t + 1, m, h)
-            Y is a numpy.ndarray containing all of the outputs. Shape: (t, m, o)
+            Y is a numpy.ndarray containing all of the outputs.
+            Shape of Y: (t, m, o)
     """
     t, m, i = X.shape
     _, h = h_0.shape
