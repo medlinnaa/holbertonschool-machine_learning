@@ -55,7 +55,8 @@ def deep_rnn(rnn_cells, X, h_0):
             # Save the calculated hidden state into our H tensor
             H[step + 1, lay] = h_next
 
-            # The input for the *next* layer is the hidden state of *this* layer
+            # The input for the *next* layer is
+            # the hidden state of *this* layer
             x_in = h_next
 
             # If we are at the very last layer, record the output 'y'
