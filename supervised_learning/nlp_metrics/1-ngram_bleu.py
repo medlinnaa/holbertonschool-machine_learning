@@ -55,7 +55,9 @@ def ngram_bleu(references, sentence, n):
         # Count occurrences in the candidate sentence
         count_candidate = cand_ngrams.count(ngram)
         # Find the maximum occurrences of this n-gram in any single reference
-        max_ref_count = max([r_ngrams.count(ngram) for r_ngrams in ref_ngrams_list])
+        max_ref_count = max(
+            [r_ngrams.count(ngram) for r_ngrams in ref_ngrams_list]
+        )
         # Add the clipped count
         matches += min(count_candidate, max_ref_count)
 
