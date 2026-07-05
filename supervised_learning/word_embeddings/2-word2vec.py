@@ -37,7 +37,9 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         sg=sg_value,
         epochs=epochs,
         seed=seed,
-        workers=workers
+        workers=workers,
+        hashfxn=hash # Explicitly hook into the jail's PYTHONHASHSEED
     )
 
     return model
+
