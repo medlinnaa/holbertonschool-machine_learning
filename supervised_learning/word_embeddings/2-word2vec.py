@@ -24,20 +24,25 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
     Returns:
         The trained Word2Vec model.
     """
-    # Gensim uses 'sg' for the training algorithm: 1 for skip-gram, 0 for CBOW
-    sg_type = 0 if cbow else 1
-
-    # Initialize and train the Word2Vec model using the full namespace
+    # 1. Create the model
     model = gensim.models.Word2Vec(
-        sentences=sentences,
         vector_size=vector_size,
         min_count=min_count,
         window=window,
         negative=negative,
-        sg=sg_type,
-        epochs=epochs,
+        sg=0 if cbow else 1,
         seed=seed,
         workers=workers
+    )
+
+    # 2. Build the vocabulary
+    model.build_vocab(sentences)
+
+    # 3. Train the model
+    model.train(
+        sentences,
+        total_examples=model.corpus_count,
+        epochs=epochs
     )
 
     return model
