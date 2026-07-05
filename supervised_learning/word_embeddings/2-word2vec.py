@@ -24,11 +24,10 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
     Returns:
         The trained Word2Vec model.
     """
-    # Passing the sentences directly into the constructor automatically
-    # handles vocabulary building and training while perfectly maintaining
-    # the random seed state expected by the checker.
+    # 1. Create the model
+    # Notice `epochs=epochs` is passed here to ensure the internal
+    # learning rate scheduling logic is properly initialized.
     model = gensim.models.Word2Vec(
-        sentences=sentences,
         vector_size=vector_size,
         min_count=min_count,
         window=window,
@@ -37,6 +36,16 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         seed=seed,
         workers=workers,
         epochs=epochs
+    )
+
+    # 2. Build the vocabulary
+    model.build_vocab(sentences)
+
+    # 3. Train the model
+    model.train(
+        sentences,
+        total_examples=model.corpus_count,
+        epochs=model.epochs
     )
 
     return model
