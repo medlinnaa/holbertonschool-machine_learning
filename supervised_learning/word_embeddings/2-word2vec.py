@@ -5,11 +5,25 @@ Module to create, build, and train a word2vec model using Gensim.
 import gensim
 
 
+def _stable_hash(word):
+    """
+    Deterministic string hash independent of PYTHONHASHSEED,
+    used to seed each word's initial vector reproducibly.
+    Args:
+        word (str): word to hash.
+    Returns:
+        int: a stable 32-bit-ish hash value.
+    """
+    h = 0
+    for char in word:
+        h = (h * 31 + ord(char)) & 0xffffffff
+    return h
+
+
 def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
-                   negative=5, cbow=True, epochs=5, seed=0, workers=1):
+                    negative=5, cbow=True, epochs=5, seed=0, workers=1):
     """
     Creates, builds, and trains a gensim word2vec model.
-
     Args:
         sentences (list): List of sentences to be trained on.
         vector_size (int): Dimensionality of the embedding layer.
@@ -20,13 +34,9 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         epochs (int): Number of iterations to train over.
         seed (int): Seed for the random number generator.
         workers (int): Number of worker threads to train the model.
-
     Returns:
         The trained Word2Vec model.
     """
-    # 1. Create the model
-    # Notice `epochs=epochs` is passed here to ensure the internal
-    # learning rate scheduling logic is properly initialized.
     model = gensim.models.Word2Vec(
         vector_size=vector_size,
         min_count=min_count,
@@ -35,17 +45,13 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         sg=0 if cbow else 1,
         seed=seed,
         workers=workers,
-        epochs=epochs
+        epochs=epochs,
+        hashfxn=_stable_hash,
     )
-
-    # 2. Build the vocabulary
     model.build_vocab(sentences)
-
-    # 3. Train the model
     model.train(
         sentences,
         total_examples=model.corpus_count,
         epochs=model.epochs
     )
-
     return model
