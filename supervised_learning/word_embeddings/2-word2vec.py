@@ -5,21 +5,6 @@ Module to create, build, and train a word2vec model using Gensim.
 import gensim
 
 
-def _stable_hash(word):
-    """
-    Deterministic string hash independent of PYTHONHASHSEED,
-    used to seed each word's initial vector reproducibly.
-    Args:
-        word (str): word to hash.
-    Returns:
-        int: a stable 32-bit-ish hash value.
-    """
-    h = 0
-    for char in word:
-        h = (h * 31 + ord(char)) & 0xffffffff
-    return h
-
-
 def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
                     negative=5, cbow=True, epochs=5, seed=0, workers=1):
     """
@@ -38,6 +23,7 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         The trained Word2Vec model.
     """
     model = gensim.models.Word2Vec(
+        sentences=sentences,
         vector_size=vector_size,
         min_count=min_count,
         window=window,
@@ -45,13 +31,6 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         sg=0 if cbow else 1,
         seed=seed,
         workers=workers,
-        epochs=epochs,
-        hashfxn=_stable_hash,
-    )
-    model.build_vocab(sentences)
-    model.train(
-        sentences,
-        total_examples=model.corpus_count,
-        epochs=model.epochs
+        epochs=epochs
     )
     return model
