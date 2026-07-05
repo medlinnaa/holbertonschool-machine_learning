@@ -25,7 +25,7 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
     Returns:
         The trained Word2Vec model.
     """
-    # Gensim uses 'sg' for skip-gram: 1 for skip-gram, 0 for CBOW.
+    # Strictly map cbow to Gensim's sg parameter (0 for CBOW, 1 for Skip-gram)
     sg_value = 0 if cbow else 1
 
     model = gensim.models.Word2Vec(
@@ -37,9 +37,7 @@ def word2vec_model(sentences, vector_size=100, min_count=5, window=5,
         sg=sg_value,
         epochs=epochs,
         seed=seed,
-        workers=workers,
-        hashfxn=hash # Explicitly hook into the jail's PYTHONHASHSEED
+        workers=workers
     )
 
     return model
-
