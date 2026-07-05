@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+"""
+Module to calculate the unigram BLEU score for a sentence.
+"""
+import numpy as np
+
+
+def uni_bleu(references, sentence):
+    """
+    Calculates the unigram BLEU score for a sentence.
+
+    Args:
+        references (list): List of reference translations, where each
+            reference translation is a list of the words.
+        sentence (list): List containing the model proposed sentence.
+
+    Returns:
+        float: The unigram BLEU score.
+    """
+    c = len(sentence)
+    
+    # Early exit if the proposed sentence is empty
+    if c == 0:
+        return 0.0
+
+    # 1. Find the closest reference length (r) for the Brevity Penalty
+    ref_lengths = [len(ref) for ref in references]
+    # If there is a tie in difference, this lambda sorting ensures 
+    # we default to the shortest reference length as per standard BLEU
+    r = min(ref_lengths, key=lambda x: (abs(x - c), x))
+
+    # 2. Calculate Unigram Precision (p1)
+    # Using a set to only iterate over unique words in the candidate
+    unique_words = set(sentence)
+    matches = 0
+
+    for word in unique_words:
+        # Count occurrences in the candidate sentence
+        count_candidate = sentence.count(word)
+        # Find the maximum occurrences of this word in any single reference
+        max_ref_count = max([ref.count(word) for ref in references])
+        # Add the clipped count to our matches
+        matches += min(count_candidate, max_ref_count)
+
+    p1 = matches / c
+
+    # 3. Calculate Brevity Penalty (BP)
+    if c > r:
+        bp = 1.0
+    else:
+        bp = np.exp(1 - (r / c))
+
+    # Return the final BLEU score
+    return bp * p1
