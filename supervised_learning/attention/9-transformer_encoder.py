@@ -63,7 +63,10 @@ class Encoder(tf.keras.layers.Layer):
         # Pass the input through the embedding layer
         x = self.embedding(x)
 
-        # Apply positional encoding (slice to match seq_len and cast to float)
+        # Scale the embeddings by the square root of the model dimensionality
+        x *= tf.math.sqrt(tf.cast(self.dm, tf.float32))
+
+        # Add positional encodings (cast to float32 to avoid type errors)
         pos_encoding = tf.cast(self.positional_encoding[:seq_len, :],
                                dtype=tf.float32)
         x += pos_encoding
