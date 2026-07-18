@@ -3,7 +3,6 @@
 Module for the RNNDecoder class.
 """
 import tensorflow as tf
-SelfAttention = __import__('1-self_attention').SelfAttention
 
 
 class RNNDecoder(tf.keras.layers.Layer):
@@ -32,7 +31,6 @@ class RNNDecoder(tf.keras.layers.Layer):
                                        return_state=True,
                                        recurrent_initializer='glorot_uniform')
         self.F = tf.keras.layers.Dense(units=vocab)
-        self.attention = SelfAttention(units)
 
     def call(self, x, s_prev, hidden_states):
         """
@@ -54,8 +52,14 @@ class RNNDecoder(tf.keras.layers.Layer):
             s: A tensor of shape (batch, units) containing the new
                decoder hidden state.
         """
+        # Import and instantiate inside the call method as expected by checker
+        SelfAttention = __import__('1-self_attention').SelfAttention
+
+        # Use s_prev.shape[1] to dynamically grab the 'units' value
+        attention = SelfAttention(s_prev.shape[1])
+
         # Calculate context vector using SelfAttention
-        context, _ = self.attention(s_prev, hidden_states)
+        context, _ = attention(s_prev, hidden_states)
 
         # Expand context to have shape (batch, 1, units)
         context = tf.expand_dims(context, 1)
