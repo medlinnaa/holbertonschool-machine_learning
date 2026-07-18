@@ -44,10 +44,11 @@ class MultiHeadAttention(tf.keras.layers.Layer):
             mask: always None (or a tensor to apply optional masking)
 
         Returns:
-            output: a tensor with its last two dimensions as (..., seq_len_q, dm)
-                    containing the scaled dot product attention
+            output: a tensor with its last two dimensions as
+            (..., seq_len_q, dm) containing the scaled dot product attention
             weights: a tensor with its last three dimensions as
-                     (..., h, seq_len_q, seq_len_v) containing attention weights
+                     (..., h, seq_len_q, seq_len_v)
+            containing attention weights
         """
         batch_size = tf.shape(Q)[0]
 
