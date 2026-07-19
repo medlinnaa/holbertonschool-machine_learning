@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-A class that loads, prepares, tokenizes, and encodes a dataset for machine translation.
+A class that loads, prepares, tokenizes,
+and encodes a dataset for machine translation.
 """
 import tensorflow as tf
 import transformers
@@ -83,7 +84,8 @@ class Dataset:
 
         Args:
             pt (tf.Tensor): Tensor containing the Portuguese sentence.
-            en (tf.Tensor): Tensor containing the corresponding English sentence.
+            en (tf.Tensor): Tensor containing
+            the corresponding English sentence.
 
         Returns:
             tuple: (pt_tokens, en_tokens) containing the lists of
@@ -112,7 +114,8 @@ class Dataset:
 
         Args:
             pt (tf.Tensor): Tensor containing the Portuguese sentence.
-            en (tf.Tensor): Tensor containing the corresponding English sentence.
+            en (tf.Tensor): Tensor containing
+            the corresponding English sentence.
 
         Returns:
             tuple: (pt_encoded, en_encoded) containing the tokenized
